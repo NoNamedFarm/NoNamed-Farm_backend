@@ -20,12 +20,12 @@ public class Farm extends BaseIdEntity {
 	private String deviceId;
 
 	@Column(length = 10)
-	private String name;
+	private String farmName;
 	@Column(length = 15)
-	private String crop;
+	private String farmCrop;
 
 	private float temperature; // 온도
-	private float atmHumidity; // 공기 습도
+	private float airHumidity; // 공기 습도
 	private int soilHumidity; // 온도 습도
 
 	private Boolean isWater; // 물 스위치의 상태 (ON,OFF)
@@ -39,9 +39,9 @@ public class Farm extends BaseIdEntity {
 		this.createdDate = LocalDate.now();
 	}
 
-	public void updateFarm(String name, String crop) {
-		this.name = name;
-		this.crop = crop;
+	public void updateFarm(String farmName, String farmCrop) {
+		this.farmName = farmName;
+		this.farmCrop = farmCrop;
 	}
 
 	public void isState(Boolean isWater, Boolean isLight) {
