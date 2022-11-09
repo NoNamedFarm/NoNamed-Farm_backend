@@ -14,7 +14,10 @@ public enum ErrorCode {
 
 	NOT_MATCHES_PASSWORD(400, "비밀번호가 올바르지 않습니다."),
 	USER_NOT_FOUND(404, "유저를 찾을 수 없습니다."),
-	USER_ID_OVERLAP_EXIST(409,"아이디가 이미 존재합니다.");
+	USER_ID_OVERLAP_EXIST(409,"아이디가 이미 존재합니다."),
+
+	DIARY_NOT_FOUND(404, "일지를 찾을 수 없습니다."),
+	USER_NOT_DIARY(401, "일기 작성자가 아닙니다.");
 
 	private final int status;
 	private final String message;
