@@ -1,6 +1,7 @@
 package com.nonamed.farm.domain.diary.service;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.nonamed.farm.domain.diary.domain.Diary;
 import com.nonamed.farm.domain.diary.domain.repository.DiaryRepository;
@@ -17,6 +18,7 @@ public class DiaryService {
 	private final DiaryRepository diaryRepository;
 	private final AuthUtil authUtil;
 
+	@Transactional
 	public Long saveDiary(DiaryRequest request) {
 
 		return diaryRepository.save(Diary.builder()
@@ -25,6 +27,13 @@ public class DiaryService {
 				.content(authUtil.getUserId())
 			.build()).getId();
 
+	}
+
+	@Transactional
+	public Long updateDiary(Long diaryId, DiaryRequest request) {
+		Diary diary = diaryRepository.findById(diaryId)
+			.orElseThrow(() -> DiaryNotFoundException.EXCEPTION);
+		return diaryRepository.save(diary.update(request.getContent(), request.getDate())).getId();
 	}
 
 }
