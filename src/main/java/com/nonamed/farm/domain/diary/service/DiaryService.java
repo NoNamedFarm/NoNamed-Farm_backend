@@ -1,5 +1,6 @@
 package com.nonamed.farm.domain.diary.service;
 
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -8,6 +9,7 @@ import com.nonamed.farm.domain.diary.domain.repository.DiaryRepository;
 import com.nonamed.farm.domain.diary.exception.DiaryNotFoundException;
 import com.nonamed.farm.domain.diary.exception.UserNotDiaryException;
 import com.nonamed.farm.domain.diary.presentation.dto.request.DiaryRequest;
+import com.nonamed.farm.domain.diary.presentation.dto.response.DiaryListResponse;
 import com.nonamed.farm.domain.user.service.util.AuthUtil;
 
 import lombok.RequiredArgsConstructor;
@@ -46,6 +48,18 @@ public class DiaryService {
 		if(!diary.getUserId().equals(authUtil.getUserId())) throw UserNotDiaryException.EXCEPTION;
 
 		diaryRepository.delete(diary);
+	}
+
+	public DiaryListResponse getDiaryList(Pageable page) {
+		return new DiaryListResponse(diaryRepository.findByUserIdOrderByDateDesc(authUtil.getUserId(), page)
+			.map(this::ofDiaryResponse).toList());
+	}
+
+	private DiaryListResponse.DiaryResponse ofDiaryResponse(Diary diary) {
+		return DiaryListResponse.DiaryResponse.builder()
+			.id(diary.getId())
+			.date(diary.getDate())
+			.build();
 	}
 
 }

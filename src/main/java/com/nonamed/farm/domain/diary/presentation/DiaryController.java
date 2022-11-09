@@ -3,8 +3,11 @@ package com.nonamed.farm.domain.diary.presentation;
 import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -14,6 +17,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.nonamed.farm.domain.diary.presentation.dto.request.DiaryRequest;
+import com.nonamed.farm.domain.diary.presentation.dto.response.DiaryListResponse;
 import com.nonamed.farm.domain.diary.service.DiaryService;
 
 import lombok.RequiredArgsConstructor;
@@ -41,6 +45,11 @@ public class DiaryController {
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	public void deleteDiary(@PathVariable("id") @NotBlank Long diaryId) {
 		diaryService.deleteDiary(diaryId);
+	}
+
+	@GetMapping
+	public DiaryListResponse getDiaryList(@PageableDefault Pageable page) {
+		return diaryService.getDiaryList(page);
 	}
 
 }
