@@ -1,5 +1,6 @@
 package com.nonamed.farm.global.jwt;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Value;
@@ -9,6 +10,7 @@ import org.springframework.stereotype.Component;
 
 import com.nonamed.farm.domain.refresh.domain.RefreshToken;
 import com.nonamed.farm.domain.refresh.domain.repository.RefreshTokenRepository;
+import com.nonamed.farm.domain.user.exception.NotRefreshTokenException;
 import com.nonamed.farm.global.jwt.details.Details;
 import com.nonamed.farm.global.jwt.details.DetailsService;
 import com.nonamed.farm.global.jwt.exception.TokenUnauthorizedException;
@@ -54,6 +56,10 @@ public class JwtTokenProvider {
                 .compact();
     }
 
+    public LocalDateTime getExpiryTime() {
+        return LocalDateTime.now().plusSeconds(accessTokenTime * 1000);
+    }
+
     public String generateRefreshToken(String userId) {
         return Jwts.builder()
                 .setExpiration(new Date(System.currentTimeMillis() + refreshTokenTime * 1000))
@@ -70,19 +76,14 @@ public class JwtTokenProvider {
     }
 
     public boolean validateToken(String token) {
-        try {
-            getBody(token).getExpiration().after(new Date());
-            return true;
-        } catch (Exception e) {
-            return false;
-        }
+        return getBody(token).getExpiration().after(new Date());
     }
 
     public boolean isRefreshToken(String token) {
         try {
             return getHeader(token).get("typ").equals("refresh_token");
         } catch (Exception e) {
-            throw TokenUnauthorizedException.EXCEPTION;
+            throw NotRefreshTokenException.EXCEPTION;
         }
     }
 
