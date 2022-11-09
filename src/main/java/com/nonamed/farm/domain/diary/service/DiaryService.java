@@ -6,6 +6,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.nonamed.farm.domain.diary.domain.Diary;
 import com.nonamed.farm.domain.diary.domain.repository.DiaryRepository;
 import com.nonamed.farm.domain.diary.exception.DiaryNotFoundException;
+import com.nonamed.farm.domain.diary.exception.UserNotDiaryException;
 import com.nonamed.farm.domain.diary.presentation.dto.request.DiaryRequest;
 import com.nonamed.farm.domain.user.service.util.AuthUtil;
 
@@ -33,6 +34,8 @@ public class DiaryService {
 	public Long updateDiary(Long diaryId, DiaryRequest request) {
 		Diary diary = diaryRepository.findById(diaryId)
 			.orElseThrow(() -> DiaryNotFoundException.EXCEPTION);
+		if(!diary.getUserId().equals(authUtil.getUserId())) throw UserNotDiaryException.EXCEPTION;
+
 		return diaryRepository.save(diary.update(request.getContent(), request.getDate())).getId();
 	}
 
