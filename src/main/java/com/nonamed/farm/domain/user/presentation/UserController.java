@@ -39,6 +39,11 @@ public class UserController {
 		return userService.signUp(request);
 	}
 
+	@PutMapping("/refresh")
+	public TokenDto reassignToken(@RequestBody @Valid TokenDto request) {
+		return userService.reassignToken(request);
+	}
+
 	@GetMapping("/check")
 	public void overlapCheckUserId(@NotBlank @RequestParam("user-id")String userId) {
 		userService.overlapCheckUserId(userId);

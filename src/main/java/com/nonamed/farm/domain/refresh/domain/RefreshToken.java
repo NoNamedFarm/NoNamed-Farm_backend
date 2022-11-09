@@ -26,7 +26,8 @@ public class RefreshToken {
         this.refreshToken = refreshToken;
     }
 
-    public void update(String refreshTokenValue) {
+    public RefreshToken update(String refreshTokenValue) {
         this.refreshToken = refreshTokenValue;
+        return this;
     }
 }

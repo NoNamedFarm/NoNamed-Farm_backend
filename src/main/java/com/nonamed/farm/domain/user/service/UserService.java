@@ -66,4 +66,25 @@ public class UserService {
 		if(userRepository.existsByUserId(userId)) throw UserIdOverlapExistException.EXCEPTION;
 	}
 
+	public TokenDto reassignToken(TokenDto dto) {
+		if(provider.validateToken(dto.getAccessToken())) throw ValidateTokenException.EXCEPTION;
+		provider.isRefreshToken(dto.getRefreshToken());
+
+		RefreshToken refreshToken = refreshTokenRepository.findByRefreshToken(dto.getRefreshToken())
+			.orElseThrow(() -> RefreshTokenNotFoundException.EXCEPTION);
+
+		User user = userRepository.findById(refreshToken.getId())
+			.orElseThrow(() -> UserNotFoundException.EXCEPTION);
+
+		TokenDto token = TokenDto.builder()
+			.accessToken(provider.generateToken(user.getUserId()))
+			.refreshToken(provider.getRefreshToken(user.getUserId()))
+			.expiryTime(provider.getExpiryTime())
+			.build();
+
+		refreshTokenRepository.save(refreshToken.update(token.getRefreshToken()));
+
+		return token;
+	}
+
 }
