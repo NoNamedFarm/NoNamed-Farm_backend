@@ -39,4 +39,13 @@ public class DiaryService {
 		return diaryRepository.save(diary.update(request.getContent(), request.getDate())).getId();
 	}
 
+	@Transactional
+	public void deleteDiary(Long diaryId) {
+		Diary diary = diaryRepository.findById(diaryId)
+				.orElseThrow(() -> DiaryNotFoundException.EXCEPTION);
+		if(!diary.getUserId().equals(authUtil.getUserId())) throw UserNotDiaryException.EXCEPTION;
+
+		diaryRepository.delete(diary);
+	}
+
 }
