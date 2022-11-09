@@ -45,4 +45,25 @@ public class UserService {
 
 	}
 
+	public TokenDto signUp(SignUpRequest request) {
+		overlapCheckUserId(request.getUserId());
+
+		User user = userRepository.save(User.builder()
+				.userId(request.getUserId())
+				.password(encoder.encode(request.getPassword()))
+				.nickname(request.getNickname())
+			.build());
+
+		return TokenDto.builder()
+			.accessToken(provider.generateToken(user.getUserId()))
+			.refreshToken(provider.getRefreshToken(user.getUserId()))
+			.expiryTime(provider.getExpiryTime())
+			.build();
+
+	}
+
+	public void overlapCheckUserId(String userId) {
+		if(userRepository.existsByUserId(userId)) throw UserIdOverlapExistException.EXCEPTION;
+	}
+
 }

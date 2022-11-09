@@ -4,6 +4,6 @@ import org.springframework.data.repository.CrudRepository;
 
 import com.nonamed.farm.domain.user.domain.User;
 
-public interface UserRepository extends CrudRepository<User, Long> {
-
+public interface UserRepository extends CrudRepository<User, String> {
+	Boolean existsByUserId(String UserId);
 }

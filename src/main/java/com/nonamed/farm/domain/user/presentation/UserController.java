@@ -33,4 +33,15 @@ public class UserController {
 		return userService.login(request);
 	}
 
+	@PostMapping("/sign-up")
+	@ResponseStatus(HttpStatus.CREATED)
+	public TokenDto signUp(@RequestBody @Valid SignUpRequest request) {
+		return userService.signUp(request);
+	}
+
+	@GetMapping("/check")
+	public void overlapCheckUserId(@NotBlank @RequestParam("user-id")String userId) {
+		userService.overlapCheckUserId(userId);
+	}
+
 }
