@@ -10,6 +10,7 @@ import com.nonamed.farm.domain.diary.exception.DiaryNotFoundException;
 import com.nonamed.farm.domain.diary.exception.UserNotDiaryException;
 import com.nonamed.farm.domain.diary.presentation.dto.request.DiaryRequest;
 import com.nonamed.farm.domain.diary.presentation.dto.response.DiaryListResponse;
+import com.nonamed.farm.domain.diary.presentation.dto.response.DiaryResponse;
 import com.nonamed.farm.domain.user.service.util.AuthUtil;
 
 import lombok.RequiredArgsConstructor;
@@ -34,18 +35,16 @@ public class DiaryService {
 
 	@Transactional
 	public Long updateDiary(Long diaryId, DiaryRequest request) {
-		Diary diary = diaryRepository.findById(diaryId)
-			.orElseThrow(() -> DiaryNotFoundException.EXCEPTION);
-		if(!diary.getUserId().equals(authUtil.getUserId())) throw UserNotDiaryException.EXCEPTION;
+		Diary diary = diaryRepository.findById(diaryId).orElseThrow(() -> DiaryNotFoundException.EXCEPTION);
+		compare(diary);
 
 		return diaryRepository.save(diary.update(request.getContent(), request.getDate())).getId();
 	}
 
 	@Transactional
 	public void deleteDiary(Long diaryId) {
-		Diary diary = diaryRepository.findById(diaryId)
-				.orElseThrow(() -> DiaryNotFoundException.EXCEPTION);
-		if(!diary.getUserId().equals(authUtil.getUserId())) throw UserNotDiaryException.EXCEPTION;
+		Diary diary = diaryRepository.findById(diaryId).orElseThrow(() -> DiaryNotFoundException.EXCEPTION);
+		compare(diary);
 
 		diaryRepository.delete(diary);
 	}
@@ -53,6 +52,21 @@ public class DiaryService {
 	public DiaryListResponse getDiaryList(Pageable page) {
 		return new DiaryListResponse(diaryRepository.findByUserIdOrderByDateDesc(authUtil.getUserId(), page)
 			.map(this::ofDiaryResponse).toList());
+	}
+
+	public DiaryResponse getDiary(Long diaryId) {
+		Diary diary = diaryRepository.findById(diaryId).orElseThrow(() -> DiaryNotFoundException.EXCEPTION);
+		compare(diary);
+
+		return DiaryResponse.builder()
+			.id(diary.getId())
+			.date(diary.getDate())
+			.content(diary.getContent())
+			.build();
+	}
+
+	private void compare(Diary diary) {
+		if(!diary.getUserId().equals(authUtil.getUserId())) throw UserNotDiaryException.EXCEPTION;
 	}
 
 	private DiaryListResponse.DiaryResponse ofDiaryResponse(Diary diary) {

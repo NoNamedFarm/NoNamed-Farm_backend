@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.nonamed.farm.domain.diary.presentation.dto.request.DiaryRequest;
 import com.nonamed.farm.domain.diary.presentation.dto.response.DiaryListResponse;
+import com.nonamed.farm.domain.diary.presentation.dto.response.DiaryResponse;
 import com.nonamed.farm.domain.diary.service.DiaryService;
 
 import lombok.RequiredArgsConstructor;
@@ -50,6 +51,11 @@ public class DiaryController {
 	@GetMapping
 	public DiaryListResponse getDiaryList(@PageableDefault Pageable page) {
 		return diaryService.getDiaryList(page);
+	}
+
+	@GetMapping("/{id}")
+	public DiaryResponse getDiary(@PathVariable("id") @NotBlank Long diaryId) {
+		return diaryService.getDiary(diaryId);
 	}
 
 }
