@@ -2,6 +2,7 @@ package com.nonamed.farm.domain.user.service;
 
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.nonamed.farm.domain.refresh.domain.RefreshToken;
 import com.nonamed.farm.domain.refresh.domain.repository.RefreshTokenRepository;
@@ -31,6 +32,7 @@ public class UserService {
 	private final PasswordEncoder encoder;
 	private final JwtTokenProvider provider;
 
+	@Transactional
 	public TokenDto login(LoginRequest request) {
 		User user = userRepository.findById(request.getUserId())
 			.orElseThrow(() -> UserNotFoundException.EXCEPTION);
@@ -47,6 +49,7 @@ public class UserService {
 
 	}
 
+	@Transactional
 	public TokenDto signUp(SignUpRequest request) {
 		overlapCheckUserId(request.getUserId());
 
@@ -68,6 +71,7 @@ public class UserService {
 		if(userRepository.existsByUserId(userId)) throw UserIdOverlapExistException.EXCEPTION;
 	}
 
+	@Transactional
 	public TokenDto reassignToken(TokenDto dto) {
 		if(provider.validateToken(dto.getAccessToken())) throw ValidateTokenException.EXCEPTION;
 		provider.isRefreshToken(dto.getRefreshToken());
