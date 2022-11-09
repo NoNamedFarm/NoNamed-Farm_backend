@@ -15,6 +15,7 @@ import com.nonamed.farm.domain.user.exception.ValidateTokenException;
 import com.nonamed.farm.domain.user.presentation.dto.TokenDto;
 import com.nonamed.farm.domain.user.presentation.dto.request.LoginRequest;
 import com.nonamed.farm.domain.user.presentation.dto.request.SignUpRequest;
+import com.nonamed.farm.domain.user.service.util.AuthUtil;
 import com.nonamed.farm.global.jwt.JwtTokenProvider;
 
 import lombok.RequiredArgsConstructor;
@@ -25,6 +26,7 @@ public class UserService {
 
 	private final UserRepository userRepository;
 	private final RefreshTokenRepository refreshTokenRepository;
+	private final AuthUtil authUtil;
 
 	private final PasswordEncoder encoder;
 	private final JwtTokenProvider provider;
@@ -85,6 +87,13 @@ public class UserService {
 		refreshTokenRepository.save(refreshToken.update(token.getRefreshToken()));
 
 		return token;
+	}
+
+	public void logout() {
+		RefreshToken refreshToken = refreshTokenRepository.findById(authUtil.getUserId())
+			.orElseThrow(() -> RefreshTokenNotFoundException.EXCEPTION);
+
+		refreshTokenRepository.delete(refreshToken);
 	}
 
 }

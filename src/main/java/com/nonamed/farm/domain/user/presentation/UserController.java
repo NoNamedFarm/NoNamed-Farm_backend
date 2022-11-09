@@ -4,6 +4,7 @@ import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 
 import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -45,8 +46,15 @@ public class UserController {
 	}
 
 	@GetMapping("/check")
+	@ResponseStatus(HttpStatus.NO_CONTENT)
 	public void overlapCheckUserId(@NotBlank @RequestParam("user-id")String userId) {
 		userService.overlapCheckUserId(userId);
+	}
+
+	@DeleteMapping("/logout")
+	@ResponseStatus(HttpStatus.NO_CONTENT)
+	public void logout() {
+		userService.logout();
 	}
 
 }
