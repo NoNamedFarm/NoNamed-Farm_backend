@@ -33,7 +33,7 @@ public class Farm extends BaseIdEntity {
 
 	private LocalDate createdDate;
 
-	private Long userId;
+	private String userId;
 
 	public void updateDate() {
 		this.createdDate = LocalDate.now();

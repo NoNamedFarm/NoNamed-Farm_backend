@@ -23,10 +23,10 @@ public class Cycle {
 	private Boolean isLight;
 
 	@Column(nullable = false)
-	private String farmId;
+	private Long farmId;
 
 	@Builder
-	private Cycle(String farmId, Boolean isWater, Boolean isLight) {
+	private Cycle(Long farmId, Boolean isWater, Boolean isLight) {
 		this.date = LocalDate.now();
 		this.isWater = isWater;
 		this.isLight = isLight;

@@ -19,10 +19,10 @@ public class Diary extends BaseTimeEntity {
 	private String content;
 
 	@Column(nullable = false)
-	private Long userId;
+	private String userId;
 
 	@Builder
-	private Diary(String content, Long userId) {
+	private Diary(String content, String userId) {
 		this.content = content;
 		this.userId = userId;
 	}
