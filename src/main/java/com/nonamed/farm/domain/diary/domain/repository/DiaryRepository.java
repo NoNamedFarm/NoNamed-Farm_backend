@@ -7,5 +7,5 @@ import org.springframework.data.repository.CrudRepository;
 import com.nonamed.farm.domain.diary.domain.Diary;
 
 public interface DiaryRepository extends CrudRepository<Diary, Long> {
-	Page<Diary> findByUserIdOrderByDateDesc(String userId, Pageable page);
+	Page<Diary> findAllByUserIdOrderByDateDesc(String userId, Pageable page);
 }

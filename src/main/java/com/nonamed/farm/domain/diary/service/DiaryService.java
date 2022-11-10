@@ -7,7 +7,6 @@ import org.springframework.transaction.annotation.Transactional;
 import com.nonamed.farm.domain.diary.domain.Diary;
 import com.nonamed.farm.domain.diary.domain.repository.DiaryRepository;
 import com.nonamed.farm.domain.diary.exception.DiaryNotFoundException;
-import com.nonamed.farm.domain.diary.exception.UserNotDiaryException;
 import com.nonamed.farm.domain.diary.presentation.dto.request.DiaryRequest;
 import com.nonamed.farm.domain.diary.presentation.dto.response.DiaryListResponse;
 import com.nonamed.farm.domain.diary.presentation.dto.response.DiaryResponse;
@@ -50,7 +49,7 @@ public class DiaryService {
 	}
 
 	public DiaryListResponse getDiaryList(Pageable page) {
-		return new DiaryListResponse(diaryRepository.findByUserIdOrderByDateDesc(authUtil.getUserId(), page)
+		return new DiaryListResponse(diaryRepository.findAllByUserIdOrderByDateDesc(authUtil.getUserId(), page)
 			.map(this::ofDiaryResponse).toList());
 	}
 
