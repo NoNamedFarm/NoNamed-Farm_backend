@@ -5,6 +5,9 @@ import java.time.LocalDate;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 
+import com.nonamed.farm.domain.diary.domain.Diary;
+import com.nonamed.farm.domain.diary.exception.UserNotDiaryException;
+import com.nonamed.farm.domain.fram.exception.UserNotFarmException;
 import com.nonamed.farm.global.entity.BaseIdEntity;
 
 import lombok.AccessLevel;
@@ -44,9 +47,16 @@ public class Farm extends BaseIdEntity {
 		this.farmCrop = farmCrop;
 	}
 
-	public void isState(Boolean isWater, Boolean isLight) {
-		this.isWater = isWater;
-		this.isLight = isLight;
+	public void isWater() {
+		this.isWater = !this.isWater;
+	}
+
+	public void isLight() {
+		this.isLight = !this.isLight;
+	}
+
+	public void compare(String userId) {
+		if(this.userId.equals(userId)) throw UserNotFarmException.EXCEPTION;
 	}
 
 }
