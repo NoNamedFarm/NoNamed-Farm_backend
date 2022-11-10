@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.nonamed.farm.domain.fram.presentation.dto.response.FarmResponse;
 import com.nonamed.farm.domain.fram.service.FarmDetailService;
 import com.nonamed.farm.domain.fram.service.FarmService;
 
@@ -22,6 +23,11 @@ public class FarmController {
 	private final FarmService farmService;
 	private final FarmDetailService farmDetailService;
 
+	@GetMapping("/{id}")
+	public FarmResponse getFarmDetail(@PathVariable("id") @NotBlank Long farmId) {
+		return farmDetailService.getFarmDetail(farmId);
+	}
+
 	@GetMapping("/switch/water/{id}")
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	public void switchWater(@PathVariable("id") @NotBlank Long farmId) {
@@ -33,6 +39,5 @@ public class FarmController {
 	public void switchLight(@PathVariable("id") @NotBlank Long farmId) {
 		farmDetailService.isLight(farmId);
 	}
-
 
 }
