@@ -36,7 +36,7 @@ public class DiaryService {
 	@Transactional
 	public Long updateDiary(Long diaryId, DiaryRequest request) {
 		Diary diary = diaryRepository.findById(diaryId).orElseThrow(() -> DiaryNotFoundException.EXCEPTION);
-		compare(diary);
+		diary.compare(diary.getUserId());
 
 		return diaryRepository.save(diary.update(request.getContent(), request.getDate())).getId();
 	}
@@ -44,7 +44,7 @@ public class DiaryService {
 	@Transactional
 	public void deleteDiary(Long diaryId) {
 		Diary diary = diaryRepository.findById(diaryId).orElseThrow(() -> DiaryNotFoundException.EXCEPTION);
-		compare(diary);
+		diary.compare(diary.getUserId());
 
 		diaryRepository.delete(diary);
 	}
@@ -56,17 +56,13 @@ public class DiaryService {
 
 	public DiaryResponse getDiary(Long diaryId) {
 		Diary diary = diaryRepository.findById(diaryId).orElseThrow(() -> DiaryNotFoundException.EXCEPTION);
-		compare(diary);
+		diary.compare(diary.getUserId());
 
 		return DiaryResponse.builder()
 			.id(diary.getId())
 			.date(diary.getDate())
 			.content(diary.getContent())
 			.build();
-	}
-
-	private void compare(Diary diary) {
-		if(!diary.getUserId().equals(authUtil.getUserId())) throw UserNotDiaryException.EXCEPTION;
 	}
 
 	private DiaryListResponse.DiaryResponse ofDiaryResponse(Diary diary) {
