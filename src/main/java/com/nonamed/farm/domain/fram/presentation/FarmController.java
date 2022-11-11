@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.nonamed.farm.domain.fram.presentation.dto.request.FarmRequest;
 import com.nonamed.farm.domain.fram.presentation.dto.request.FarmUpdateRequest;
 import com.nonamed.farm.domain.fram.presentation.dto.response.CycleListResponse;
-import com.nonamed.farm.domain.fram.presentation.dto.response.FarmResponse;
+import com.nonamed.farm.domain.fram.presentation.dto.response.FarmDetailResponse;
 import com.nonamed.farm.domain.fram.service.FarmDetailService;
 import com.nonamed.farm.domain.fram.service.FarmService;
 
@@ -50,7 +50,7 @@ public class FarmController {
 	}
 
 	@GetMapping("/{id}")
-	public FarmResponse getFarmDetail(@PathVariable("id") @NotBlank Long farmId) {
+	public FarmDetailResponse getFarmDetail(@PathVariable("id") @NotBlank Long farmId) {
 		return farmDetailService.getFarmDetail(farmId);
 	}
 

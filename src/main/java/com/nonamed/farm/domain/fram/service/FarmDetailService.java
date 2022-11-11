@@ -12,7 +12,7 @@ import com.nonamed.farm.domain.fram.domain.repository.CycleRepository;
 import com.nonamed.farm.domain.fram.domain.repository.FarmRepository;
 import com.nonamed.farm.domain.fram.exception.FarmNotFoundException;
 import com.nonamed.farm.domain.fram.presentation.dto.response.CycleListResponse;
-import com.nonamed.farm.domain.fram.presentation.dto.response.FarmResponse;
+import com.nonamed.farm.domain.fram.presentation.dto.response.FarmDetailResponse;
 
 import lombok.RequiredArgsConstructor;
 
@@ -23,13 +23,13 @@ public class FarmDetailService {
 	private final FarmRepository farmRepository;
 	private final CycleRepository cycleRepository;
 
-	public FarmResponse getFarmDetail(Long farmId) {
+	public FarmDetailResponse getFarmDetail(Long farmId) {
 		Farm farm = farmRepository.findById(farmId)
 			.orElseThrow(() -> FarmNotFoundException.EXCEPTION);
 		LocalDate date = cycleRepository.findFirstByFarmIdOrderByDateDesc(farmId)
 			.orElseThrow(null).getDate();
 
-		return FarmResponse.builder()
+		return FarmDetailResponse.builder()
 			.id(farm.getId())
 			.farmName(farm.getFarmName())
 			.farmCrop(farm.getFarmCrop())

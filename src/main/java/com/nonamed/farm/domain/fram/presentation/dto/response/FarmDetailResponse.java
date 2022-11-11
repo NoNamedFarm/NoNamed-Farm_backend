@@ -6,7 +6,7 @@ import lombok.Builder;
 import lombok.Getter;
 
 @Getter @Builder
-public class FarmResponse {
+public class FarmDetailResponse {
 
 	private final Long id;
 
