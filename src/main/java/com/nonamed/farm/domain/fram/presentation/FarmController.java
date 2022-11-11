@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.nonamed.farm.domain.fram.presentation.dto.response.CycleListResponse;
 import com.nonamed.farm.domain.fram.presentation.dto.response.FarmResponse;
 import com.nonamed.farm.domain.fram.service.FarmDetailService;
 import com.nonamed.farm.domain.fram.service.FarmService;
@@ -26,6 +27,11 @@ public class FarmController {
 	@GetMapping("/{id}")
 	public FarmResponse getFarmDetail(@PathVariable("id") @NotBlank Long farmId) {
 		return farmDetailService.getFarmDetail(farmId);
+	}
+
+	@GetMapping("/cycle/{id}")
+	public CycleListResponse getFarmCycle(@PathVariable("id") @NotBlank Long farmId) {
+		return farmDetailService.getDate(farmId);
 	}
 
 	@GetMapping("/switch/water/{id}")
