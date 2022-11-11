@@ -14,7 +14,7 @@ public class DiaryListResponse {
 	private final List<DiaryResponse> diaryResponses;
 
 	@Getter @Builder
-	public class DiaryResponse {
+	public static class DiaryResponse {
 
 		private final Long id;
 		private final LocalDate date;
