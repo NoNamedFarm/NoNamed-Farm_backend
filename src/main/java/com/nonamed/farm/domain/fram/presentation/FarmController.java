@@ -5,10 +5,12 @@ import javax.validation.constraints.NotBlank;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.nonamed.farm.domain.fram.presentation.dto.request.FarmRequest;
 import com.nonamed.farm.domain.fram.presentation.dto.response.CycleListResponse;
 import com.nonamed.farm.domain.fram.presentation.dto.response.FarmResponse;
 import com.nonamed.farm.domain.fram.service.FarmDetailService;
@@ -23,6 +25,12 @@ public class FarmController {
 
 	private final FarmService farmService;
 	private final FarmDetailService farmDetailService;
+
+	@PostMapping
+	@ResponseStatus(HttpStatus.CREATED)
+	public Long saveFarm(FarmRequest request) {
+		return farmService.saveFarm(request);
+	}
 
 	@GetMapping("/{id}")
 	public FarmResponse getFarmDetail(@PathVariable("id") @NotBlank Long farmId) {

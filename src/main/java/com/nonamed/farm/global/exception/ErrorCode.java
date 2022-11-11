@@ -17,6 +17,7 @@ public enum ErrorCode {
 	USER_ID_OVERLAP_EXIST(409,"아이디가 이미 존재합니다."),
 
 	FARM_NOT_FOUND(404, "농장을 찾을 수 없습니다."),
+	DEVICE_NOT_FOUND(404, "농장 device를 찾을 수 없습니다."),
 	USER_NOT_FARM(401, "농장 주인이 아닙니다."),
 
 	DIARY_NOT_FOUND(404, "일지를 찾을 수 없습니다."),

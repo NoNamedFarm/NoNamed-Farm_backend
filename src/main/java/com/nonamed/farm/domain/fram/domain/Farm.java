@@ -38,13 +38,10 @@ public class Farm extends BaseIdEntity {
 
 	private String userId;
 
-	public void updateDate() {
-		this.createdDate = LocalDate.now();
-	}
-
 	public void updateFarm(String farmName, String farmCrop) {
 		this.farmName = farmName;
 		this.farmCrop = farmCrop;
+		this.createdDate = LocalDate.now();
 	}
 
 	public void isWater() {
