@@ -39,4 +39,14 @@ public class FarmService {
 		return farmRepository.save(farm).getId();
 	}
 
+	@Transactional
+	public void deleteFarm(Long farmId) {
+		Farm farm = farmRepository.findById(farmId)
+			.orElseThrow(() -> FarmNotFoundException.EXCEPTION);
+		farm.compare(authUtil.getUserId());
+
+		farm.deleteFarm();
+	}
+
+
 }

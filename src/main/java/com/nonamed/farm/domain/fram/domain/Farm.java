@@ -50,6 +50,12 @@ public class Farm extends BaseIdEntity {
 		this.farmCrop = farmCrop;
 	}
 
+	public void deleteFarm() {
+		this.farmName = null;
+		this.farmCrop = null;
+		this.userId = null;
+	}
+
 	public void isWater() {
 		this.isWater = !this.isWater;
 	}
