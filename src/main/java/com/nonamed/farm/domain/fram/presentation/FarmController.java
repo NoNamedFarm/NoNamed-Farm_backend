@@ -1,16 +1,20 @@
 package com.nonamed.farm.domain.fram.presentation;
 
+import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.nonamed.farm.domain.fram.presentation.dto.request.FarmRequest;
+import com.nonamed.farm.domain.fram.presentation.dto.request.FarmUpdateRequest;
 import com.nonamed.farm.domain.fram.presentation.dto.response.CycleListResponse;
 import com.nonamed.farm.domain.fram.presentation.dto.response.FarmResponse;
 import com.nonamed.farm.domain.fram.service.FarmDetailService;
@@ -28,8 +32,14 @@ public class FarmController {
 
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
-	public Long saveFarm(FarmRequest request) {
+	public Long saveFarm(@RequestBody @Valid FarmRequest request) {
 		return farmService.saveFarm(request);
+	}
+
+	@PutMapping("/{id}")
+	public Long updateFarm(@PathVariable("id") @NotBlank Long farmId,
+							@RequestBody @Valid FarmUpdateRequest request) {
+		return farmService.updateFarm(farmId, request);
 	}
 
 	@GetMapping("/{id}")
