@@ -1,5 +1,6 @@
 package com.nonamed.farm.domain.diary.service;
 
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -49,8 +50,8 @@ public class DiaryService {
 	}
 
 	public DiaryListResponse getDiaryList(Pageable page) {
-		return new DiaryListResponse(diaryRepository.findAllByUserIdOrderByDateDesc(authUtil.getUserId(), page)
-			.map(this::ofDiaryResponse).toList());
+		Page<Diary> diaries = diaryRepository.findAllByUserIdOrderByDateDesc(authUtil.getUserId(), page);
+		return new DiaryListResponse(diaries.getTotalPages(), diaries.map(this::ofDiaryResponse).toList());
 	}
 
 	public DiaryResponse getDiary(Long diaryId) {

@@ -11,6 +11,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class DiaryListResponse {
 
+	private final int totalPage;
 	private final List<DiaryResponse> diaryResponses;
 
 	@Getter @Builder
