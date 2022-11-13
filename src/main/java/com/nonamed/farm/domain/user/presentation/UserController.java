@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.nonamed.farm.domain.user.presentation.dto.TokenDto;
 import com.nonamed.farm.domain.user.presentation.dto.request.LoginRequest;
 import com.nonamed.farm.domain.user.presentation.dto.request.SignUpRequest;
-import com.nonamed.farm.domain.user.service.UserService;
+import com.nonamed.farm.domain.user.service.AuthService;
 
 import lombok.RequiredArgsConstructor;
 
@@ -26,7 +26,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class UserController {
 
-	private final UserService userService;
+	private final AuthService userService;
 
 	@PostMapping("/login")
 	@ResponseStatus(HttpStatus.CREATED)
