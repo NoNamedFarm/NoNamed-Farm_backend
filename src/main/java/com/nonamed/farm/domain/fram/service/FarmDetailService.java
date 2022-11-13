@@ -39,7 +39,7 @@ public class FarmDetailService {
 			.temperature(farm.getTemperature())
 			.isLight(farm.getIsLight())
 			.isWater(farm.getIsWater())
-			.cycleDate(date)
+			.lastCycleDate(date)
 			.build();
 
 	}

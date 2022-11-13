@@ -21,6 +21,6 @@ public class FarmDetailResponse {
 	private final Boolean isWater;
 	private final Boolean isLight;
 
-	private final LocalDate cycleDate;
+	private final LocalDate lastCycleDate;
 
 }
