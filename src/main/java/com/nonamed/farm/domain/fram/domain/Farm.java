@@ -5,8 +5,6 @@ import java.time.LocalDate;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 
-import com.nonamed.farm.domain.diary.domain.Diary;
-import com.nonamed.farm.domain.diary.exception.UserNotDiaryException;
 import com.nonamed.farm.domain.fram.exception.UserNotFarmException;
 import com.nonamed.farm.global.entity.BaseIdEntity;
 
