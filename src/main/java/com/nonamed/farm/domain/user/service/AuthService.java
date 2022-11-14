@@ -16,6 +16,7 @@ import com.nonamed.farm.domain.user.exception.ValidateTokenException;
 import com.nonamed.farm.domain.user.presentation.dto.TokenDto;
 import com.nonamed.farm.domain.user.presentation.dto.request.LoginRequest;
 import com.nonamed.farm.domain.user.presentation.dto.request.SignUpRequest;
+import com.nonamed.farm.domain.user.presentation.dto.request.TokenRequest;
 import com.nonamed.farm.domain.user.service.util.AuthUtil;
 import com.nonamed.farm.global.jwt.JwtTokenProvider;
 
@@ -72,7 +73,7 @@ public class AuthService {
 	}
 
 	@Transactional
-	public TokenDto reassignToken(TokenDto dto) {
+	public TokenDto reassignToken(TokenRequest dto) {
 		if(provider.validateToken(dto.getAccessToken())) throw ValidateTokenException.EXCEPTION;
 		provider.isRefreshToken(dto.getRefreshToken());
 
