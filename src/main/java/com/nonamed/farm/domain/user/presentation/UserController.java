@@ -17,7 +17,10 @@ import org.springframework.web.bind.annotation.RestController;
 import com.nonamed.farm.domain.user.presentation.dto.TokenDto;
 import com.nonamed.farm.domain.user.presentation.dto.request.LoginRequest;
 import com.nonamed.farm.domain.user.presentation.dto.request.SignUpRequest;
+import com.nonamed.farm.domain.user.presentation.dto.request.TokenRequest;
+import com.nonamed.farm.domain.user.presentation.dto.response.UserDetailResponse;
 import com.nonamed.farm.domain.user.service.AuthService;
+import com.nonamed.farm.domain.user.service.UserService;
 
 import lombok.RequiredArgsConstructor;
 
@@ -26,35 +29,41 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class UserController {
 
-	private final AuthService userService;
+	private final AuthService authService;
+	private final UserService userService;
 
 	@PostMapping("/login")
 	@ResponseStatus(HttpStatus.CREATED)
 	public TokenDto login(@RequestBody @Valid LoginRequest request) {
-		return userService.login(request);
+		return authService.login(request);
 	}
 
 	@PostMapping("/sign-up")
 	@ResponseStatus(HttpStatus.CREATED)
 	public TokenDto signUp(@RequestBody @Valid SignUpRequest request) {
-		return userService.signUp(request);
+		return authService.signUp(request);
 	}
 
 	@PutMapping("/refresh")
-	public TokenDto reassignToken(@RequestBody @Valid TokenDto request) {
-		return userService.reassignToken(request);
+	public TokenDto reassignToken(@RequestBody @Valid TokenRequest request) {
+		return authService.reassignToken(request);
 	}
 
 	@GetMapping("/check")
 	@ResponseStatus(HttpStatus.NO_CONTENT)
-	public void overlapCheckUserId(@NotBlank @RequestParam("user-id")String userId) {
-		userService.overlapCheckUserId(userId);
+	public void overlapCheckUserId(@NotBlank @RequestParam("user")String userId) {
+		authService.overlapCheckUserId(userId);
 	}
 
 	@DeleteMapping("/logout")
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	public void logout() {
-		userService.logout();
+		authService.logout();
+	}
+
+	@GetMapping
+	public UserDetailResponse getUser() {
+		return userService.getUser();
 	}
 
 }
