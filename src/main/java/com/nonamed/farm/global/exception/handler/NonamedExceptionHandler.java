@@ -14,7 +14,7 @@ public class NonamedExceptionHandler {
 
 	@ExceptionHandler(NonamedException.class)
 	protected ResponseEntity<ErrorResponse> handlerDcsException(final NonamedException e) {
-		return new ResponseEntity<>(new ErrorResponse(e.getErrorCode().getStatus(), e.getMessage()), HttpStatus.valueOf(e.getErrorCode().getStatus()));
+		return new ResponseEntity<>(new ErrorResponse(e.getErrorCode().getStatus(), e.getErrorCode().getMessage()), HttpStatus.valueOf(e.getErrorCode().getStatus()));
 	}
 
 	@ExceptionHandler(NullPointerException.class)
