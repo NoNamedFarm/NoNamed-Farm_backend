@@ -11,4 +11,5 @@ import com.nonamed.farm.domain.fram.domain.Farm;
 public interface FarmRepository extends CrudRepository<Farm, Long> {
 	Optional<Farm> findByDeviceId(String deviceId);
 	Page<Farm> findByUserIdOrderById(String userId, Pageable page);
+	Long countByUserId(String userId);
 }

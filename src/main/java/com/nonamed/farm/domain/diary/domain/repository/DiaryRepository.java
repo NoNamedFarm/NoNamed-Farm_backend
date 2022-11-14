@@ -8,4 +8,5 @@ import com.nonamed.farm.domain.diary.domain.Diary;
 
 public interface DiaryRepository extends CrudRepository<Diary, Long> {
 	Page<Diary> findAllByUserIdOrderByDateDesc(String userId, Pageable page);
+	Long countByUserId(String userId);
 }
