@@ -1,6 +1,7 @@
 package com.nonamed.farm.domain.fram.service;
 
 import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -39,7 +40,7 @@ public class FarmDetailService {
 			.temperature(farm.getTemperature())
 			.isLight(farm.getIsLight())
 			.isWater(farm.getIsWater())
-			.lastCycleDate(date)
+			.lastCycleDate(ChronoUnit.DAYS.between(date, LocalDate.now()))
 			.build();
 
 	}
