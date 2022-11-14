@@ -57,7 +57,7 @@ public class JwtTokenProvider {
     }
 
     public LocalDateTime getExpiryTime() {
-        return LocalDateTime.now().plusSeconds(accessTokenTime * 1000);
+        return LocalDateTime.now().plusSeconds(accessTokenTime);
     }
 
     public String generateRefreshToken(String userId) {
