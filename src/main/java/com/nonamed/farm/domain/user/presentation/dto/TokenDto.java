@@ -10,10 +10,8 @@ import lombok.Getter;
 @Getter
 public class TokenDto {
 
-    @NotBlank
     private String accessToken;
 
-    @NotBlank
     private String refreshToken;
 
     private LocalDateTime expiryTime;
