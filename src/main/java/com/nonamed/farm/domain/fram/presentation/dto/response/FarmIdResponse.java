@@ -7,6 +7,6 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class FarmIdResponse {
 
-	private final Long id;
+	private final Long FarmId;
 
 }
