@@ -10,6 +10,7 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+import com.nonamed.farm.global.exception.handler.AuthenticationEntryPointImpl;
 import com.nonamed.farm.global.jwt.FilterConfig;
 import com.nonamed.farm.global.jwt.JwtTokenProvider;
 
@@ -21,6 +22,8 @@ import lombok.RequiredArgsConstructor;
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final JwtTokenProvider jwtTokenProvider;
+    private final AuthenticationEntryPointImpl authenticationEntryPoint;
+
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
@@ -42,6 +45,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             .antMatchers(HttpMethod.PUT, "/user/refresh").permitAll()
             .antMatchers(HttpMethod.GET, "/user/check").permitAll()
             .anyRequest().authenticated()
+
+            .and().httpBasic().authenticationEntryPoint(authenticationEntryPoint)
 
             .and().apply(new FilterConfig(jwtTokenProvider));
     }

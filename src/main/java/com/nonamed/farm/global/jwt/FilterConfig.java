@@ -5,6 +5,8 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.web.DefaultSecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
+import com.nonamed.farm.global.exception.handler.NonamedExceptionFilter;
+
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
@@ -15,7 +17,9 @@ public class FilterConfig extends SecurityConfigurerAdapter<DefaultSecurityFilte
     @Override
     public void configure(HttpSecurity builder) {
         JwtTokenFilter jwtTokenFilter = new JwtTokenFilter(jwtTokenProvider);
+        NonamedExceptionFilter nonamedExceptionFilter = new NonamedExceptionFilter();
         builder.addFilterBefore(jwtTokenFilter, UsernamePasswordAuthenticationFilter.class);
+        builder.addFilterBefore(nonamedExceptionFilter, JwtTokenFilter.class);
     }
 
 }

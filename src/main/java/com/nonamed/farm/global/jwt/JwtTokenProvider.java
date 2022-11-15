@@ -76,7 +76,11 @@ public class JwtTokenProvider {
     }
 
     public boolean validateToken(String token) {
-        return getBody(token).getExpiration().after(new Date());
+        try {
+            return getBody(token).getExpiration().after(new Date());
+        } catch (Exception e) {
+            throw TokenUnauthorizedException.EXCEPTION;
+        }
     }
 
     public boolean isRefreshToken(String token) {
