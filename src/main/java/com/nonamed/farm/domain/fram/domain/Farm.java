@@ -63,7 +63,7 @@ public class Farm extends BaseIdEntity {
 	}
 
 	public void compare(String userId) {
-		if(this.userId.equals(userId)) throw UserNotFarmException.EXCEPTION;
+		if(!this.userId.equals(userId)) throw UserNotFarmException.EXCEPTION;
 	}
 
 }

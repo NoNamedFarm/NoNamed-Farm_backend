@@ -40,7 +40,7 @@ public class Diary extends BaseIdEntity {
 	}
 
 	public void compare(String userId) {
-		if(this.userId.equals(userId)) throw UserNotDiaryException.EXCEPTION;
+		if(!this.userId.equals(userId)) throw UserNotDiaryException.EXCEPTION;
 	}
 
 }
