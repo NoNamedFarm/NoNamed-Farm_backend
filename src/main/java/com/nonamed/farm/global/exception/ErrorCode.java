@@ -18,6 +18,7 @@ public enum ErrorCode {
 
 	FARM_NOT_FOUND(404, "농장을 찾을 수 없습니다."),
 	DEVICE_NOT_FOUND(404, "농장 device를 찾을 수 없습니다."),
+	FARM_USER_EXIST(409, "이미 농장의 주인이 존재합니다."),
 	USER_NOT_FARM(401, "농장 주인이 아닙니다."),
 
 	DIARY_NOT_FOUND(404, "일지를 찾을 수 없습니다."),

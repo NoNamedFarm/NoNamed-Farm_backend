@@ -9,8 +9,10 @@ import com.nonamed.farm.domain.fram.domain.Farm;
 import com.nonamed.farm.domain.fram.domain.repository.FarmRepository;
 import com.nonamed.farm.domain.fram.exception.DeviceNotFoundException;
 import com.nonamed.farm.domain.fram.exception.FarmNotFoundException;
+import com.nonamed.farm.domain.fram.exception.FarmUserExistException;
 import com.nonamed.farm.domain.fram.presentation.dto.request.FarmRequest;
 import com.nonamed.farm.domain.fram.presentation.dto.request.FarmUpdateRequest;
+import com.nonamed.farm.domain.fram.presentation.dto.response.FarmIdResponse;
 import com.nonamed.farm.domain.fram.presentation.dto.response.FarmListResponse;
 import com.nonamed.farm.domain.user.service.util.AuthUtil;
 
@@ -24,22 +26,26 @@ public class FarmService {
 	private final AuthUtil authUtil;
 
 	@Transactional
-	public Long saveFarm(FarmRequest request) {
+	public FarmIdResponse saveFarm(FarmRequest request) {
 		Farm farm = farmRepository.findByDeviceId(request.getDeviceId())
 				.orElseThrow(() -> DeviceNotFoundException.EXCEPTION);
 
+		if(!farm.getUserId().isEmpty()) {
+			throw FarmUserExistException.EXCEPTION;
+		}
+
 		farm.createFarm(request.getFarmName(), request.getFarmCrop(), authUtil.getUserId());
-		return farmRepository.save(farm).getId();
+		return new FarmIdResponse(farmRepository.save(farm).getId());
 	}
 
 	@Transactional
-	public Long updateFarm(Long farmId, FarmUpdateRequest request) {
+	public FarmIdResponse updateFarm(Long farmId, FarmUpdateRequest request) {
 		Farm farm = farmRepository.findById(farmId)
 			.orElseThrow(() -> FarmNotFoundException.EXCEPTION);
 		farm.compare(authUtil.getUserId());
 
 		farm.updateFarm(request.getFarmName(), request.getFarmCrop());
-		return farmRepository.save(farm).getId();
+		return new FarmIdResponse(farmRepository.save(farm).getId());
 	}
 
 	@Transactional

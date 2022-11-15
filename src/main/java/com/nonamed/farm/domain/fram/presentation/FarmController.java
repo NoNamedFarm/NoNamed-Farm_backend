@@ -20,6 +20,7 @@ import com.nonamed.farm.domain.fram.presentation.dto.request.FarmRequest;
 import com.nonamed.farm.domain.fram.presentation.dto.request.FarmUpdateRequest;
 import com.nonamed.farm.domain.fram.presentation.dto.response.CycleListResponse;
 import com.nonamed.farm.domain.fram.presentation.dto.response.FarmDetailResponse;
+import com.nonamed.farm.domain.fram.presentation.dto.response.FarmIdResponse;
 import com.nonamed.farm.domain.fram.presentation.dto.response.FarmListResponse;
 import com.nonamed.farm.domain.fram.service.FarmDetailService;
 import com.nonamed.farm.domain.fram.service.FarmService;
@@ -36,12 +37,12 @@ public class FarmController {
 
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
-	public Long saveFarm(@RequestBody @Valid FarmRequest request) {
+	public FarmIdResponse saveFarm(@RequestBody @Valid FarmRequest request) {
 		return farmService.saveFarm(request);
 	}
 
 	@PutMapping("/{id}")
-	public Long updateFarm(@PathVariable("id") @NotBlank Long farmId,
+	public FarmIdResponse updateFarm(@PathVariable("id") @NotBlank Long farmId,
 							@RequestBody @Valid FarmUpdateRequest request) {
 		return farmService.updateFarm(farmId, request);
 	}
