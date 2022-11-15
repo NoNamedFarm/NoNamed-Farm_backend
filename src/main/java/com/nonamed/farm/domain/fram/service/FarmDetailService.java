@@ -28,7 +28,7 @@ public class FarmDetailService {
 		Farm farm = farmRepository.findById(farmId)
 			.orElseThrow(() -> FarmNotFoundException.EXCEPTION);
 		LocalDate date = cycleRepository.findFirstByFarmIdOrderByDateDesc(farmId)
-			.orElseThrow(null).getDate();
+			.orElse(Cycle.builder().farmId(0L).build()).getDate();
 
 		return FarmDetailResponse.builder()
 			.id(farm.getId())
