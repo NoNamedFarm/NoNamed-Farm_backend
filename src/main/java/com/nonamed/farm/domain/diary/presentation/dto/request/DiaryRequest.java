@@ -10,7 +10,6 @@ import lombok.Getter;
 @Getter
 public class DiaryRequest {
 
-	@NotBlank
 	private LocalDate date;
 
 	@NotBlank
