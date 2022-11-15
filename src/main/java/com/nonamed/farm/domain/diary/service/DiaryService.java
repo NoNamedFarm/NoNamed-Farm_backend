@@ -29,7 +29,7 @@ public class DiaryService {
 	@Transactional
 	public DiaryIdResponse saveDiary(DiaryRequest request) {
 
-		if(LocalDate.now().isAfter(request.getDate())) throw NotRightDateException.EXCEPTION;
+		if(!LocalDate.now().isAfter(request.getDate())) throw NotRightDateException.EXCEPTION;
 
 		return new DiaryIdResponse(diaryRepository.save(Diary.builder()
 				.date(request.getDate())
@@ -41,7 +41,7 @@ public class DiaryService {
 
 	@Transactional
 	public DiaryIdResponse updateDiary(Long diaryId, DiaryRequest request) {
-		if(LocalDate.now().isAfter(request.getDate())) throw NotRightDateException.EXCEPTION;
+		if(!LocalDate.now().isAfter(request.getDate())) throw NotRightDateException.EXCEPTION;
 
 		Diary diary = diaryRepository.findById(diaryId).orElseThrow(() -> DiaryNotFoundException.EXCEPTION);
 		diary.compare(diary.getUserId());
