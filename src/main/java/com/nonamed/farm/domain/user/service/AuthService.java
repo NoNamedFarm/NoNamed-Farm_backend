@@ -73,25 +73,24 @@ public class AuthService {
 	}
 
 	@Transactional
-	public TokenDto reassignToken(TokenRequest dto) {
-		if(provider.validateToken(dto.getAccessToken())) throw ValidateTokenException.EXCEPTION;
-		provider.isRefreshToken(dto.getRefreshToken());
+	public TokenDto reassignToken(String token) {
+		provider.isRefreshToken(token);
 
-		RefreshToken refreshToken = refreshTokenRepository.findByRefreshToken(dto.getRefreshToken())
+		RefreshToken refreshToken = refreshTokenRepository.findByRefreshToken(token)
 			.orElseThrow(() -> RefreshTokenNotFoundException.EXCEPTION);
 
 		User user = userRepository.findById(refreshToken.getId())
 			.orElseThrow(() -> UserNotFoundException.EXCEPTION);
 
-		TokenDto token = TokenDto.builder()
+		TokenDto newToken = TokenDto.builder()
 			.accessToken(provider.generateToken(user.getUserId()))
 			.refreshToken(provider.getRefreshToken(user.getUserId()))
 			.expiryTime(provider.getExpiryTime())
 			.build();
 
-		refreshTokenRepository.save(refreshToken.update(token.getRefreshToken()));
+		refreshTokenRepository.save(refreshToken.update(newToken.getRefreshToken()));
 
-		return token;
+		return newToken;
 	}
 
 	public void logout() {
