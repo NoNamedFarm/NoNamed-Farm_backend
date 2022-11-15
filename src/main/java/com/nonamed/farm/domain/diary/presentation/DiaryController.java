@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.nonamed.farm.domain.diary.presentation.dto.request.DiaryRequest;
+import com.nonamed.farm.domain.diary.presentation.dto.response.DiaryIdResponse;
 import com.nonamed.farm.domain.diary.presentation.dto.response.DiaryListResponse;
 import com.nonamed.farm.domain.diary.presentation.dto.response.DiaryResponse;
 import com.nonamed.farm.domain.diary.service.DiaryService;
@@ -32,12 +33,12 @@ public class DiaryController {
 
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
-	public Long saveDiary(@RequestBody @Valid DiaryRequest request) {
+	public DiaryIdResponse saveDiary(@RequestBody @Valid DiaryRequest request) {
 		return diaryService.saveDiary(request);
 	}
 
 	@PutMapping("/{id}")
-	public Long updateDiary(@PathVariable("id") @NotBlank Long diaryId,
+	public DiaryIdResponse updateDiary(@PathVariable("id") @NotBlank Long diaryId,
 						@RequestBody @Valid DiaryRequest request) {
 		return diaryService.updateDiary(diaryId, request);
 	}

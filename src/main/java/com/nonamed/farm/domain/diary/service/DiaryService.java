@@ -12,6 +12,7 @@ import com.nonamed.farm.domain.diary.domain.repository.DiaryRepository;
 import com.nonamed.farm.domain.diary.exception.DiaryNotFoundException;
 import com.nonamed.farm.domain.diary.exception.NotRightDateException;
 import com.nonamed.farm.domain.diary.presentation.dto.request.DiaryRequest;
+import com.nonamed.farm.domain.diary.presentation.dto.response.DiaryIdResponse;
 import com.nonamed.farm.domain.diary.presentation.dto.response.DiaryListResponse;
 import com.nonamed.farm.domain.diary.presentation.dto.response.DiaryResponse;
 import com.nonamed.farm.domain.user.service.util.AuthUtil;
@@ -26,26 +27,26 @@ public class DiaryService {
 	private final AuthUtil authUtil;
 
 	@Transactional
-	public Long saveDiary(DiaryRequest request) {
+	public DiaryIdResponse saveDiary(DiaryRequest request) {
 
 		if(LocalDate.now().isAfter(request.getDate())) throw NotRightDateException.EXCEPTION;
 
-		return diaryRepository.save(Diary.builder()
+		return new DiaryIdResponse(diaryRepository.save(Diary.builder()
 				.date(request.getDate())
 				.content(request.getContent())
 				.userId(authUtil.getUserId())
-			.build()).getId();
+			.build()).getId());
 
 	}
 
 	@Transactional
-	public Long updateDiary(Long diaryId, DiaryRequest request) {
+	public DiaryIdResponse updateDiary(Long diaryId, DiaryRequest request) {
 		if(LocalDate.now().isAfter(request.getDate())) throw NotRightDateException.EXCEPTION;
 
 		Diary diary = diaryRepository.findById(diaryId).orElseThrow(() -> DiaryNotFoundException.EXCEPTION);
 		diary.compare(diary.getUserId());
 
-		return diaryRepository.save(diary.update(request.getContent(), request.getDate())).getId();
+		return new DiaryIdResponse(diaryRepository.save(diary.update(request.getContent(), request.getDate())).getId());
 	}
 
 	@Transactional
