@@ -21,7 +21,8 @@ public enum ErrorCode {
 	USER_NOT_FARM(401, "농장 주인이 아닙니다."),
 
 	DIARY_NOT_FOUND(404, "일지를 찾을 수 없습니다."),
-	USER_NOT_DIARY(401, "일기 작성자가 아닙니다.");
+	USER_NOT_DIARY(401, "일기 작성자가 아닙니다."),
+	NOT_RIGHT_DATE(400, "날짜를 다시 확인해주세요.");
 
 	private final int status;
 	private final String message;

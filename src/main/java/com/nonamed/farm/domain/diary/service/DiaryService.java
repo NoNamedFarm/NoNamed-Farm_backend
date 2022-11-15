@@ -1,5 +1,7 @@
 package com.nonamed.farm.domain.diary.service;
 
+import java.time.LocalDate;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -8,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.nonamed.farm.domain.diary.domain.Diary;
 import com.nonamed.farm.domain.diary.domain.repository.DiaryRepository;
 import com.nonamed.farm.domain.diary.exception.DiaryNotFoundException;
+import com.nonamed.farm.domain.diary.exception.NotRightDateException;
 import com.nonamed.farm.domain.diary.presentation.dto.request.DiaryRequest;
 import com.nonamed.farm.domain.diary.presentation.dto.response.DiaryListResponse;
 import com.nonamed.farm.domain.diary.presentation.dto.response.DiaryResponse;
@@ -25,16 +28,20 @@ public class DiaryService {
 	@Transactional
 	public Long saveDiary(DiaryRequest request) {
 
+		if(LocalDate.now().isAfter(request.getDate())) throw NotRightDateException.EXCEPTION;
+
 		return diaryRepository.save(Diary.builder()
 				.date(request.getDate())
-				.userId(request.getContent())
-				.content(authUtil.getUserId())
+				.content(request.getContent())
+				.userId(authUtil.getUserId())
 			.build()).getId();
 
 	}
 
 	@Transactional
 	public Long updateDiary(Long diaryId, DiaryRequest request) {
+		if(LocalDate.now().isAfter(request.getDate())) throw NotRightDateException.EXCEPTION;
+
 		Diary diary = diaryRepository.findById(diaryId).orElseThrow(() -> DiaryNotFoundException.EXCEPTION);
 		diary.compare(diary.getUserId());
 
