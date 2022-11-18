@@ -11,6 +11,7 @@ import com.nonamed.farm.domain.fram.domain.Cycle;
 import com.nonamed.farm.domain.fram.domain.Farm;
 import com.nonamed.farm.domain.fram.domain.repository.CycleRepository;
 import com.nonamed.farm.domain.fram.domain.repository.FarmRepository;
+import com.nonamed.farm.domain.fram.exception.CycleNotFoundException;
 import com.nonamed.farm.domain.fram.exception.FarmNotFoundException;
 import com.nonamed.farm.domain.fram.presentation.dto.response.CycleListResponse;
 import com.nonamed.farm.domain.fram.presentation.dto.response.FarmDetailResponse;
@@ -63,6 +64,9 @@ public class FarmDetailService {
 		farm.compare(farm.getUserId());
 
 		farm.isWater();
+
+		if(farm.getIsWater()) saveWaterCycle(farm.getId());
+
 		farmRepository.save(farm);
 	}
 
@@ -72,7 +76,38 @@ public class FarmDetailService {
 		farm.compare(farm.getUserId());
 
 		farm.isLight();
+
+		if(farm.getIsLight()) saveLightCycle(farm.getId());
+
 		farmRepository.save(farm);
+	}
+
+	private void saveLightCycle(Long farmId) {
+		if(cycleRepository.existsByDateAndFarmId(LocalDate.now(), farmId)) {
+			Cycle cycle = cycleRepository.findByDateAndFarmId(LocalDate.now(), farmId)
+				.orElseThrow(() -> CycleNotFoundException.EXCEPTION);
+			cycle.isState(cycle.getIsWater(), true);
+		} else {
+			cycleRepository.save(Cycle.builder()
+				.isLight(true)
+				.isWater(false)
+				.farmId(farmId)
+				.build());
+		}
+	}
+
+	private void saveWaterCycle(Long farmId) {
+		if(cycleRepository.existsByDateAndFarmId(LocalDate.now(), farmId)) {
+			Cycle cycle = cycleRepository.findByDateAndFarmId(LocalDate.now(), farmId)
+				.orElseThrow(() -> CycleNotFoundException.EXCEPTION);
+			cycle.isState(true, cycle.getIsLight());
+		} else {
+			cycleRepository.save(Cycle.builder()
+				.isLight(false)
+				.isWater(true)
+				.farmId(farmId)
+				.build());
+		}
 	}
 
 	private CycleListResponse.CycleResponse ofCycleResponse(Cycle cycle) {

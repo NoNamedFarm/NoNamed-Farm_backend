@@ -19,10 +19,11 @@ public enum ErrorCode {
 	FARM_NOT_FOUND(404, "농장을 찾을 수 없습니다."),
 	DEVICE_NOT_FOUND(404, "농장 device를 찾을 수 없습니다."),
 	FARM_USER_EXIST(409, "이미 농장의 주인이 존재합니다."),
-	USER_NOT_FARM(401, "농장 주인이 아닙니다."),
+	USER_NOT_FARM(403, "농장 주인이 아닙니다."),
+	CYCLE_NOT_FOUND(404, "오늘 날짜의 cycle을 찾을 수 없습니다."),
 
 	DIARY_NOT_FOUND(404, "일지를 찾을 수 없습니다."),
-	USER_NOT_DIARY(401, "일기 작성자가 아닙니다."),
+	USER_NOT_DIARY(403, "일기 작성자가 아닙니다."),
 	NOT_RIGHT_DATE(400, "날짜를 다시 확인해주세요.");
 
 	private final int status;

@@ -12,4 +12,6 @@ public interface CycleRepository extends CrudRepository<Cycle, Long> {
 	Optional<Cycle> findFirstByFarmIdOrderByDateDesc(Long farmId);
 	List<Cycle> findByIsLightAndDateBetween(Boolean isLight, LocalDate start, LocalDate end);
 	List<Cycle> findByIsWaterAndDateBetween(Boolean isWater, LocalDate start, LocalDate end);
+	Boolean existsByDateAndFarmId(LocalDate date, Long farmId);
+	Optional<Cycle> findByDateAndFarmId(LocalDate date, Long farmId);
 }
