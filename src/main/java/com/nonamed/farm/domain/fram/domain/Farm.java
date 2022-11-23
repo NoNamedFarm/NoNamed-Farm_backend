@@ -29,8 +29,8 @@ public class Farm extends BaseIdEntity {
 	private float airHumidity; // 공기 습도
 	private int soilHumidity; // 온도 습도
 
-	private Boolean isWater; // 물 스위치의 상태 (ON,OFF)
-	private Boolean isLight; // 빛 스위치의 상태
+	private String isWater; // 물 스위치의 상태 (ON,OFF)
+	private String isLight; // 빛 스위치의 상태
 
 	private LocalDate createdDate;
 
@@ -52,16 +52,24 @@ public class Farm extends BaseIdEntity {
 		this.farmName = null;
 		this.farmCrop = null;
 		this.userId = null;
-		this.isLight = false;
-		this.isWater = false;
+		this.isLight = "0";
+		this.isWater = "0";
 	}
 
 	public void isWater() {
-		this.isWater = !this.isWater;
+		if(this.isWater.equals("0")) {
+			this.isWater = "1";
+		} else if(this.isWater.equals("1")) {
+			this.isWater = "0";
+		}
 	}
 
 	public void isLight() {
-		this.isLight = !this.isLight;
+		if(this.isLight.equals("0")) {
+			this.isLight = "1";
+		} else if(this.isLight.equals("1")) {
+			this.isLight = "0";
+		}
 	}
 
 	public void compare(String userId) {

@@ -65,7 +65,7 @@ public class FarmDetailService {
 
 		farm.isWater();
 
-		if(farm.getIsWater()) saveWaterCycle(farm.getId());
+		if(farm.getIsWater().equals("1")) saveWaterCycle(farm.getId());
 
 		farmRepository.save(farm);
 	}
@@ -77,7 +77,7 @@ public class FarmDetailService {
 
 		farm.isLight();
 
-		if(farm.getIsLight()) saveLightCycle(farm.getId());
+		if(farm.getIsLight().equals("1")) saveLightCycle(farm.getId());
 
 		farmRepository.save(farm);
 	}

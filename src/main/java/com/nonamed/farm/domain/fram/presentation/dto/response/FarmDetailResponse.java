@@ -18,8 +18,8 @@ public class FarmDetailResponse {
 	private final float airHumidity;
 	private final int soilHumidity;
 
-	private final Boolean isWater;
-	private final Boolean isLight;
+	private final String isWater;
+	private final String isLight;
 
 	private final long lastCycleDate;
 
