@@ -8,12 +8,12 @@ import lombok.Getter;
 @Getter
 public class FarmUpdateRequest {
 
-	@NotBlank
-	@Size(max = 10)
+	@NotBlank(message = "농장 이름을 작성해주세요.")
+	@Size(max = 10, message = "10자 이하로 작성해주세요.")
 	private String farmName;
 
-	@NotBlank
-	@Size(max = 15)
+	@NotBlank(message = "기르는 작물을 작성해주세요.")
+	@Size(max = 15, message = "15자 이하로 작성해주세요.")
 	private String farmCrop;
 
 }

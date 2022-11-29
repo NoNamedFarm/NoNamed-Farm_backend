@@ -8,11 +8,11 @@ import lombok.Getter;
 @Getter
 public class LoginRequest {
 
-	@NotBlank
+	@NotBlank(message = "아이디를 작성해주세요.")
 	@Size(min = 2, max = 10)
 	private String userId;
 
-	@NotBlank
+	@NotBlank(message = "비밀번호를 작성해주세요.")
 	@Size(min = 6, max = 20)
 	private String password;
 
