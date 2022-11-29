@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.nonamed.farm.domain.user.presentation.dto.TokenDto;
 import com.nonamed.farm.domain.user.presentation.dto.request.LoginRequest;
 import com.nonamed.farm.domain.user.presentation.dto.request.SignUpRequest;
-import com.nonamed.farm.domain.user.presentation.dto.request.TokenRequest;
 import com.nonamed.farm.domain.user.presentation.dto.response.UserDetailResponse;
 import com.nonamed.farm.domain.user.service.AuthService;
 import com.nonamed.farm.domain.user.service.UserService;
