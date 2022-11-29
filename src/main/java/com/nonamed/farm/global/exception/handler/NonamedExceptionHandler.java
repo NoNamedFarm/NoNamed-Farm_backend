@@ -6,6 +6,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
+import org.springframework.web.bind.MissingRequestHeaderException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
@@ -48,9 +49,15 @@ public class NonamedExceptionHandler {
 		return new ResponseEntity<>(new ErrorResponse(405, e.getMessage()), HttpStatus.METHOD_NOT_ALLOWED);
 	}
 
+	@ExceptionHandler(MissingRequestHeaderException.class)
+	protected ResponseEntity<ErrorResponse> MissingRequestHeaderException(Exception e) {
+		log.error("[MissingRequestHeaderException] : " + e.getMessage());
+		return new ResponseEntity<>(new ErrorResponse(400, e.getMessage()), HttpStatus.BAD_REQUEST);
+	}
+
 	@ExceptionHandler(Exception.class)
 	protected ResponseEntity<ErrorResponse> handleException(Exception e) {
-		log.error("[exception] : " + e.getMessage());
+		log.error("[exception] : " + e.getMessage(), e);
 		return new ResponseEntity<>(new ErrorResponse(500, e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 
