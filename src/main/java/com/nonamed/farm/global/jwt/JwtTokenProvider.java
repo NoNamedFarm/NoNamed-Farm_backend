@@ -56,10 +56,6 @@ public class JwtTokenProvider {
                 .compact();
     }
 
-    public LocalDateTime getExpiryTime() {
-        return LocalDateTime.now().plusSeconds(accessTokenTime);
-    }
-
     public String generateRefreshToken(String userId) {
         return Jwts.builder()
                 .setExpiration(new Date(System.currentTimeMillis() + refreshTokenTime * 1000))

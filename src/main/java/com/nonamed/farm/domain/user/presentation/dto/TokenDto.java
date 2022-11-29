@@ -1,9 +1,5 @@
 package com.nonamed.farm.domain.user.presentation.dto;
 
-import java.time.LocalDateTime;
-
-import javax.validation.constraints.NotBlank;
-
 import lombok.Builder;
 import lombok.Getter;
 
@@ -14,13 +10,10 @@ public class TokenDto {
 
     private String refreshToken;
 
-    private LocalDateTime expiryTime;
-
     @Builder
-    private TokenDto(String accessToken, String refreshToken, LocalDateTime expiryTime) {
+    private TokenDto(String accessToken, String refreshToken) {
         this.accessToken = accessToken;
         this.refreshToken = refreshToken;
-        this.expiryTime = expiryTime;
     }
 
 }

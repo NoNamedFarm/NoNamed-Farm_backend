@@ -43,7 +43,6 @@ public class AuthService {
 		return TokenDto.builder()
 			.accessToken(provider.generateToken(user.getUserId()))
 			.refreshToken(provider.getRefreshToken(user.getUserId()))
-			.expiryTime(provider.getExpiryTime())
 			.build();
 
 	}
@@ -61,7 +60,6 @@ public class AuthService {
 		return TokenDto.builder()
 			.accessToken(provider.generateToken(user.getUserId()))
 			.refreshToken(provider.getRefreshToken(user.getUserId()))
-			.expiryTime(provider.getExpiryTime())
 			.build();
 
 	}
@@ -83,7 +81,6 @@ public class AuthService {
 		TokenDto newToken = TokenDto.builder()
 			.accessToken(provider.generateToken(user.getUserId()))
 			.refreshToken(provider.getRefreshToken(user.getUserId()))
-			.expiryTime(provider.getExpiryTime())
 			.build();
 
 		refreshTokenRepository.save(refreshToken.update(newToken.getRefreshToken()));

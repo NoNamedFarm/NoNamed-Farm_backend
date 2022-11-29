@@ -53,5 +53,5 @@ public class NonamedExceptionHandler {
 		log.error("[exception] : " + e.getMessage());
 		return new ResponseEntity<>(new ErrorResponse(500, e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
 	}
-	
+
 }
