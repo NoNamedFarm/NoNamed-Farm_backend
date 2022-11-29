@@ -30,7 +30,7 @@ public class FarmService {
 		Farm farm = farmRepository.findByDeviceId(request.getDeviceId())
 				.orElseThrow(() -> DeviceNotFoundException.EXCEPTION);
 
-		if(!farm.getUserId().isEmpty()) {
+		if(!(farm.getUserId() == null)) {
 			throw FarmUserExistException.EXCEPTION;
 		}
 
