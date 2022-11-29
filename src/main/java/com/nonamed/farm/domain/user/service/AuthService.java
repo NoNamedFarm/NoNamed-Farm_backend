@@ -36,7 +36,7 @@ public class AuthService {
 		User user = userRepository.findById(request.getUserId())
 			.orElseThrow(() -> UserNotFoundException.EXCEPTION);
 
-		if(encoder.matches(request.getPassword(), user.getPassword())) {
+		if(!encoder.matches(request.getPassword(), user.getPassword())) {
 			throw NotMatchesPasswordException.EXCEPTION;
 		}
 
