@@ -12,11 +12,9 @@ import com.nonamed.farm.domain.user.exception.NotMatchesPasswordException;
 import com.nonamed.farm.domain.user.exception.RefreshTokenNotFoundException;
 import com.nonamed.farm.domain.user.exception.UserIdOverlapExistException;
 import com.nonamed.farm.domain.user.exception.UserNotFoundException;
-import com.nonamed.farm.domain.user.exception.ValidateTokenException;
 import com.nonamed.farm.domain.user.presentation.dto.TokenDto;
 import com.nonamed.farm.domain.user.presentation.dto.request.LoginRequest;
 import com.nonamed.farm.domain.user.presentation.dto.request.SignUpRequest;
-import com.nonamed.farm.domain.user.presentation.dto.request.TokenRequest;
 import com.nonamed.farm.domain.user.service.util.AuthUtil;
 import com.nonamed.farm.global.jwt.JwtTokenProvider;
 
