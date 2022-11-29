@@ -20,7 +20,7 @@ public class Farm extends BaseIdEntity {
 	@Column(nullable = false)
 	private String deviceId;
 
-	@Column(length = 10)
+	@Column(length = 5)
 	private String farmName;
 	@Column(length = 15)
 	private String farmCrop;
