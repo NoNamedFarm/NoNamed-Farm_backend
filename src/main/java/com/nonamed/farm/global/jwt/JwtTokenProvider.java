@@ -62,7 +62,6 @@ public class JwtTokenProvider {
                 .setIssuedAt(new Date())
                 .setHeaderParam("typ", "refresh")
                 .signWith(SignatureAlgorithm.HS256, secretKey)
-                .setSubject(userId)
                 .compact();
     }
 
