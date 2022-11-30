@@ -2,6 +2,7 @@ package com.nonamed.farm.domain.fram.service;
 
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
+import java.time.temporal.TemporalAdjusters;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -46,14 +47,14 @@ public class FarmDetailService {
 
 	}
 
-	public CycleListResponse getDate(Long farmId) {
-		LocalDate end = LocalDate.now();
-		LocalDate start = LocalDate.of(end.getYear(), end.getMonth(), 1);
+	public CycleListResponse getDate(Long farmId, int year, int month) {
+		LocalDate start = LocalDate.of(year, month,1);
+		LocalDate end = start.with(TemporalAdjusters.lastDayOfMonth());
 
-		List<CycleListResponse.CycleResponse> lightCycle = cycleRepository.findByIsLightAndDateBetween(true, start, end)
-			.stream().map(this::ofCycleResponse).collect(Collectors.toList());
-		List<CycleListResponse.CycleResponse>  waterCycle = cycleRepository.findByIsWaterAndDateBetween(true, start, end)
-			.stream().map(this::ofCycleResponse).collect(Collectors.toList());
+		List<LocalDate> lightCycle = cycleRepository.findByFarmIdAndIsLightAndDateBetween(farmId, true, start, end)
+			.stream().map(cycle -> { return cycle.getDate();}).collect(Collectors.toList());
+		List<LocalDate>  waterCycle = cycleRepository.findByFarmIdAndIsWaterAndDateBetween(farmId, true, start, end)
+			.stream().map(cycle -> { return cycle.getDate();}).collect(Collectors.toList());
 
 		return new CycleListResponse(lightCycle, waterCycle);
 	}
@@ -109,10 +110,5 @@ public class FarmDetailService {
 				.build());
 		}
 	}
-
-	private CycleListResponse.CycleResponse ofCycleResponse(Cycle cycle) {
-		return new CycleListResponse.CycleResponse(cycle.getDate());
-	}
-
 
 }

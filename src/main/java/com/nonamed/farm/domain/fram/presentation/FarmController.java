@@ -1,5 +1,7 @@
 package com.nonamed.farm.domain.fram.presentation;
 
+import java.time.LocalDate;
+
 import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 
@@ -13,6 +15,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -64,8 +67,9 @@ public class FarmController {
 	}
 
 	@GetMapping("/cycle/{id}")
-	public CycleListResponse getFarmCycle(@PathVariable("id") @NotBlank Long farmId) {
-		return farmDetailService.getDate(farmId);
+	public CycleListResponse getFarmCycle(@PathVariable("id") @NotBlank Long farmId,
+											@RequestParam("year")int year, @RequestParam("month")int month) {
+		return farmDetailService.getDate(farmId, year, month);
 	}
 
 	@GetMapping("/switch/water/{id}")

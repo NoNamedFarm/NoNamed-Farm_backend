@@ -10,13 +10,7 @@ import lombok.Getter;
 @AllArgsConstructor
 public class CycleListResponse {
 
-	private final List<CycleResponse> waterCycleResponses;
-	private final List<CycleResponse> lightCycleResponses;
-
-	@Getter
-	@AllArgsConstructor
-	public static class CycleResponse {
-		private final LocalDate date;
-	}
+	private final List<LocalDate> waterCycleResponses;
+	private final List<LocalDate> lightCycleResponses;
 
 }
