@@ -72,13 +72,13 @@ public class FarmController {
 		return farmDetailService.getDate(farmId, year, month);
 	}
 
-	@GetMapping("/switch/water/{id}")
+	@PutMapping("/switch/water/{id}")
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	public void switchWater(@PathVariable("id") @NotBlank Long farmId) {
 		farmDetailService.isWater(farmId);
 	}
 
-	@GetMapping("/switch/light/{id}")
+	@PutMapping("/switch/light/{id}")
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	public void switchLight(@PathVariable("id") @NotBlank Long farmId) {
 		farmDetailService.isLight(farmId);
