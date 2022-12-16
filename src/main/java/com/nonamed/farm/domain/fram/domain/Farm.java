@@ -17,7 +17,7 @@ import lombok.NoArgsConstructor;
 @Entity
 public class Farm extends BaseIdEntity {
 
-	@Column(nullable = false)
+	@Column(nullable = false, unique = true)
 	private String deviceId;
 
 	@Column(length = 5)
