@@ -56,7 +56,7 @@ public class FarmDetailService {
 		List<LocalDate>  waterCycle = cycleRepository.findByFarmIdAndIsWaterAndDateBetween(farmId, true, start, end)
 			.stream().map(cycle -> { return cycle.getDate();}).collect(Collectors.toList());
 
-		return new CycleListResponse(lightCycle, waterCycle);
+		return new CycleListResponse(waterCycle, lightCycle);
 	}
 
 	public void isWater(Long farmId) {
